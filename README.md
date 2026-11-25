@@ -157,6 +157,16 @@ This repo is the portable, cache-first version: the model call happens outside t
 
 The regression gate is adapted from [llmops-eval-harness](https://github.com/PZawieja/llmops-eval-harness).
 
+## Series
+
+| # | Repo | What it adds |
+|---|---|---|
+| 1 | [dbt-agentic-engine](https://github.com/PZawieja/dbt-agentic-engine) | Agentic tool use + structured trace |
+| 2 | [llmops-eval-harness](https://github.com/PZawieja/llmops-eval-harness) | Scored eval loop, cost/latency tracking, regression gate |
+| 3 | [semantic-layer-agent](https://github.com/PZawieja/semantic-layer-agent) | Agent on the dbt Semantic Layer: disambiguation, templates, memory |
+| 4 | [governed-analytics-mcp](https://github.com/PZawieja/governed-analytics-mcp) | MCP server that queries as the asker: warehouse RLS, persona evals, audit log |
+| 5 | dbt-llm-enrich (this repo) | LLM classification as a tested dbt layer: content-hash cache, Batches API, golden-set accuracy tests, cost table |
+
 ## Development
 
 ```bash
