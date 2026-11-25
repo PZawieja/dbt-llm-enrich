@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: fct_tickets
+    description: One row per ticket with its LLM classification under the current prompt.
+    columns:
+      - name: ticket_id
+        data_tests: [unique, not_null]
+      - name: account_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_accounts')
+                field: account_id
+      - name: category
+        description: Must agree with the golden labels on at least 85% of golden tickets.
+        data_tests:
+          - min_accuracy:
+              arguments:
+                golden: ref('stg_golden_ticket_labels')
+                golden_column: category
+                threshold: 0.85
+      - name: urgency
+        data_tests:
+          - min_accuracy:
+              arguments:
+                golden: ref('stg_golden_ticket_labels')
+                golden_column: urgency
+                threshold: 0.70
+
+  - name: dim_accounts
+    description: One row per account with ticket counts.
+    columns:
+      - name: account_id
+        data_tests: [unique, not_null]
+
+  - name: fct_enrichment_runs
+    description: >-
+      One row per enrichment run that sent requests: what was cached, what was
+      sent, real token counts and cost at Batch API prices.
+    columns:
+      - name: run_id
+        data_tests: [unique, not_null]
+      - name: cost_usd
+        data_tests: [not_null]
+
+  - name: fct_prompt_accuracy
+    description: Agreement with the golden labels per prompt version and label.
+    data_tests:
+      - dbt_utils_free_unique_combination:
+          arguments:
+            columns: [prompt_version, label_name]
+    columns:
+      - name: accuracy
+        data_tests: [not_null]

@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      live:
+        description: Classify uncached tickets live (needs the ANTHROPIC_API_KEY secret)
+        type: boolean
+        default: false
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uvx ruff check .
+      - run: uvx ruff format --check .
+      - run: uv sync && uv run sqlfluff lint warehouse/dbt/models warehouse/dbt/tests
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync
+      - run: uv run pytest -q
+      - name: dbt build (seeds, staging, then everything that doesn't need results)
+        working-directory: warehouse/dbt
+        run: uv run dbt build --profiles-dir . --exclude test_name:min_accuracy
+      - name: Classify from the committed cache, no API key
+        if: ${{ !inputs.live }}
+        run: uv run enrich run --require-complete
+      - name: Classify uncached tickets live
+        if: ${{ inputs.live }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: uv run enrich run --require-complete
+      - name: dbt build again, including the golden accuracy tests
+        working-directory: warehouse/dbt
+        run: uv run dbt build --profiles-dir .
+      - name: Accuracy and cost gate against eval/baseline.json
+        run: uv run enrich eval --prompt v1 --prompt v2 --gate

@@ -1,0 +1,7 @@
+ledgerkite:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('ENRICH_DUCKDB_PATH', 'ledgerkite.duckdb') }}"
+      threads: 4

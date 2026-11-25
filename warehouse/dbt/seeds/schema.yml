@@ -1,0 +1,27 @@
+version: 2
+
+seeds:
+  - name: raw_tickets
+    description: Ledgerkite help-desk tickets as exported from the support tool (fictional, seeded).
+    columns:
+      - name: ticket_id
+        data_tests: [unique, not_null]
+  - name: raw_accounts
+    description: Ledgerkite customer accounts (fictional, seeded).
+    columns:
+      - name: account_id
+        data_tests: [unique, not_null]
+  - name: golden_ticket_labels
+    description: >-
+      150 tickets labelled by hand: every prompt-injection ticket, 24 non-English
+      tickets and a stratified sample of the rest. Labels started from the generator's
+      intended labels and every row was reviewed before commit.
+    columns:
+      - name: ticket_id
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('raw_tickets')
+                field: ticket_id

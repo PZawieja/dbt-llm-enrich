@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: int_ticket_classifications
+    description: >-
+      Every ticket joined to its cached result for the current prompt version
+      (`var('prompt_version')`) and model. Tickets without a result are kept with
+      classification_status = 'missing'.
+    columns:
+      - name: ticket_id
+        data_tests: [unique, not_null]
+      - name: classification_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [classified, missing]
