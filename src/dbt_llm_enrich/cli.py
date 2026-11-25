@@ -51,8 +51,14 @@ def cmd_run(args) -> int:
     if plan.est_cost_usd > args.max_cost:
         print(f"estimated cost is above --max-cost ${args.max_cost:.2f}; not sending")
         return 2
+    import anthropic
+
     client = SyncClient() if args.sync else BatchClient()
-    record = execute(plan, client, cache, config.RUNS_PATH)
+    try:
+        record = execute(plan, client, cache, config.RUNS_PATH)
+    except anthropic.AuthenticationError as exc:
+        print(f"the API rejected the key ({exc.status_code}); nothing was sent")
+        return 3
     print(
         f"run {record.run_id}: {record.succeeded} classified, {record.errored} failed, "
         f"{record.input_tokens:,} in / {record.output_tokens:,} out tokens, "
