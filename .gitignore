@@ -13,3 +13,4 @@ target/
 dbt_packages/
 logs/
 .user.yml
+live_demo.log
