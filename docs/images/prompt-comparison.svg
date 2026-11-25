@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="t d">
+<title id="t">Two prompts scored against 150 hand-checked labels</title>
+<desc id="d">Ledgerkite support tickets classified by Claude Haiku 5.5 in batches. Agreement with 150 golden labels, prompt v1 then v2: category 96.0% then 99.3%, urgency 89.3% then 97.3%, churn signal 97.3% then 98.7%, sentiment 74.0% then 68.7%. Sentiment is the one label the prompt never defines. Three runs share one cache: run 1, prompt v1 on every ticket, 570 sent, $0.0245; run 2, 20 tickets edited by customers, 20 sent and 551 from cache, $0.0009; run 3, prompt v2 on every ticket, 571 sent, $0.0397. Total $0.0651.</desc>
+<defs><style>
+.sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+.mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+</style></defs>
+<rect width="1200" height="640" rx="24" fill="#0d0d0f"/>
+<rect x="1" y="1" width="1198" height="638" rx="23" fill="none" stroke="#2a2924" stroke-width="2"/>
+
+<text x="54" y="62" class="mono" font-size="15" fill="#c8a96e" letter-spacing="3">LEDGERKITE · 600 SUPPORT TICKETS · CLAUDE HAIKU 5.5</text>
+<text x="54" y="108" class="sans" font-size="34" font-weight="700" fill="#f0ece4">Change the prompt, measure it, pay only for what changed.</text>
+<text x="54" y="144" class="sans" font-size="18" fill="#9a958a">Every answer is cached by ticket text, prompt and model. Both prompts and the edits cost $0.0651 in total.</text>
+
+<g transform="translate(54 180)">
+  <rect width="640" height="412" rx="16" fill="#151517" stroke="#2a2924"/>
+  <text x="28" y="44" class="sans" font-size="20" font-weight="700" fill="#f0ece4">Agreement with 150 golden labels</text>
+  <rect x="438" y="31" width="14" height="14" rx="3" fill="#5f86c4"/>
+  <text x="458" y="43" class="sans" font-size="15" fill="#9a958a">prompt v1</text>
+  <rect x="534" y="31" width="14" height="14" rx="3" fill="#b8822f"/>
+  <text x="554" y="43" class="sans" font-size="15" fill="#9a958a">prompt v2</text>
+  <line x1="28" y1="62" x2="612" y2="62" stroke="#2a2924" stroke-width="2"/>
+  <text x="28" y="92" class="sans" font-size="17" fill="#f0ece4">Category</text>
+  <rect x="28" y="102" width="441.6" height="18" rx="3" fill="#5f86c4"><title>Category, prompt v1: 96.0%</title></rect>
+  <text x="479.6" y="116" class="mono" font-size="15" fill="#9a958a">96.0%</text>
+  <rect x="28" y="122" width="456.8" height="18" rx="3" fill="#b8822f"><title>Category, prompt v2: 99.3%</title></rect>
+  <text x="494.8" y="136" class="mono" font-size="15" fill="#f0ece4">99.3%</text>
+  <text x="28" y="166" class="sans" font-size="17" fill="#f0ece4">Urgency</text>
+  <rect x="28" y="176" width="410.8" height="18" rx="3" fill="#5f86c4"><title>Urgency, prompt v1: 89.3%</title></rect>
+  <text x="448.8" y="190" class="mono" font-size="15" fill="#9a958a">89.3%</text>
+  <rect x="28" y="196" width="447.6" height="18" rx="3" fill="#b8822f"><title>Urgency, prompt v2: 97.3%</title></rect>
+  <text x="485.6" y="210" class="mono" font-size="15" fill="#f0ece4">97.3%</text>
+  <text x="28" y="240" class="sans" font-size="17" fill="#f0ece4">Churn signal</text>
+  <rect x="28" y="250" width="447.6" height="18" rx="3" fill="#5f86c4"><title>Churn signal, prompt v1: 97.3%</title></rect>
+  <text x="485.6" y="264" class="mono" font-size="15" fill="#9a958a">97.3%</text>
+  <rect x="28" y="270" width="454.0" height="18" rx="3" fill="#b8822f"><title>Churn signal, prompt v2: 98.7%</title></rect>
+  <text x="492.0" y="284" class="mono" font-size="15" fill="#f0ece4">98.7%</text>
+  <text x="28" y="314" class="sans" font-size="17" fill="#f0ece4">Sentiment</text>
+  <rect x="28" y="324" width="340.4" height="18" rx="3" fill="#5f86c4"><title>Sentiment, prompt v1: 74.0%</title></rect>
+  <text x="378.4" y="338" class="mono" font-size="15" fill="#9a958a">74.0%</text>
+  <rect x="28" y="344" width="316.0" height="18" rx="3" fill="#b8822f"><title>Sentiment, prompt v2: 68.7%</title></rect>
+  <text x="354.0" y="358" class="mono" font-size="15" fill="#f0ece4">68.7%</text>
+  <text x="28" y="388" class="sans" font-size="14" fill="#9a958a">Sentiment is the one label the prompt never defines, and the only one that got worse.</text>
+</g>
+
+<g transform="translate(726 180)">
+  <rect width="420" height="412" rx="16" fill="#151517" stroke="#2a2924"/>
+  <text x="28" y="44" class="sans" font-size="20" font-weight="700" fill="#f0ece4">Three batch runs, one cache</text>
+  <line x1="28" y1="62" x2="392" y2="62" stroke="#2a2924" stroke-width="2"/>
+  <text x="28" y="88" class="sans" font-size="17" fill="#f0ece4">1 · prompt v1, every ticket</text>
+  <text x="392" y="88" text-anchor="end" class="mono" font-size="16" fill="#f0ece4">$0.0245</text>
+  <rect x="28" y="102" width="363.4" height="18" rx="3" fill="#5f86c4"/>
+  <text x="28" y="144" class="sans" font-size="14" fill="#9a958a">570 sent · 0 from cache</text>
+  <text x="28" y="186" class="sans" font-size="17" fill="#f0ece4">2 · 20 tickets edited by customers</text>
+  <text x="392" y="186" text-anchor="end" class="mono" font-size="16" fill="#f0ece4">$0.0009</text>
+  <rect x="28" y="200" width="12.7" height="18" rx="3" fill="#5f86c4"/>
+  <rect x="42.7" y="200" width="349.3" height="18" rx="3" fill="#3a3934"/>
+  <text x="28" y="242" class="sans" font-size="14" fill="#9a958a">20 sent · 551 from cache</text>
+  <text x="28" y="284" class="sans" font-size="17" fill="#f0ece4">3 · prompt v2, every ticket</text>
+  <text x="392" y="284" text-anchor="end" class="mono" font-size="16" fill="#f0ece4">$0.0397</text>
+  <rect x="28" y="298" width="364.0" height="18" rx="3" fill="#b8822f"/>
+  <text x="28" y="340" class="sans" font-size="14" fill="#9a958a">571 sent · 0 from cache</text>
+  <line x1="28" y1="362" x2="392" y2="362" stroke="#2a2924" stroke-width="2"/>
+  <text x="28" y="392" class="sans" font-size="17" fill="#f0ece4">Total</text>
+  <text x="392" y="392" text-anchor="end" class="mono" font-size="16" fill="#f0ece4">$0.0651</text>
+</g>
+</svg>

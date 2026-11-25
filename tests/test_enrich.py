@@ -74,6 +74,7 @@ def test_estimate_uses_past_runs_when_available(tickets):
     past = [
         {
             "model": prompt.model,
+            "prompt_version": "v1",
             "succeeded": 10,
             "input_tokens": 10_000,
             "output_tokens": 500,
@@ -83,3 +84,18 @@ def test_estimate_uses_past_runs_when_available(tickets):
     assert estimate_cost(texts, prompt, past) == round(
         (3000 * 0.10 + 150 * 0.50) / 1e6 / 2, 6
     )
+
+
+def test_estimate_for_a_new_prompt_adds_the_longer_system_prompt(tickets):
+    v1, v2 = load_prompt("v1"), load_prompt("v2")
+    texts = {t.content_hash: t.ticket_text for t in tickets}
+    past = [
+        {
+            "model": v1.model,
+            "prompt_version": "v1",
+            "succeeded": 10,
+            "input_tokens": 10_000,
+            "output_tokens": 500,
+        }
+    ]
+    assert estimate_cost(texts, v2, past) > estimate_cost(texts, v1, past)

@@ -13,20 +13,20 @@ models:
                 to: ref('dim_accounts')
                 field: account_id
       - name: category
-        description: Must agree with the golden labels on at least 85% of golden tickets.
+        description: Must agree with the golden labels on at least 95% of golden tickets.
         data_tests:
           - min_accuracy:
               arguments:
                 golden: ref('stg_golden_ticket_labels')
                 golden_column: category
-                threshold: 0.85
+                threshold: 0.95
       - name: urgency
         data_tests:
           - min_accuracy:
               arguments:
                 golden: ref('stg_golden_ticket_labels')
                 golden_column: urgency
-                threshold: 0.70
+                threshold: 0.90
 
   - name: dim_accounts
     description: One row per account with ticket counts.

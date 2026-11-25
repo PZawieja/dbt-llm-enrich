@@ -2,6 +2,7 @@
 # Rebuilds the committed demo from scratch with real API calls: three runs that
 # show the cache at work. Needs ANTHROPIC_API_KEY; costs a few cents.
 set -euo pipefail
+export PYTHONUNBUFFERED=1
 exec > >(tee live_demo.log) 2>&1
 cd "$(dirname "$0")/.."
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then

@@ -9,9 +9,13 @@ import duckdb
 from .cache import Classification, ClassificationCache, cache_key
 from .client import build_params
 from .cost import cost_usd
-from .prompts import Prompt
+from .prompts import Prompt, load_prompt
 
-FALLBACK_OUTPUT_TOKENS = 60
+FALLBACK_OUTPUT_TOKENS = 45
+# Measured on the first live runs: about 3.15 characters per token for these
+# prompts, plus about 490 tokens per request for the output schema and framing.
+CHARS_PER_TOKEN = 3.15
+FIRST_RUN_OVERHEAD_TOKENS = 490
 
 
 @dataclass(frozen=True)
@@ -73,14 +77,25 @@ def estimate_cost(
     if not texts:
         return 0.0
     past = [r for r in runs if r["model"] == prompt.model and r["succeeded"]]
-    if past:
-        done = sum(r["succeeded"] for r in past)
-        per_in = sum(r["input_tokens"] for r in past) / done
-        per_out = sum(r["output_tokens"] for r in past) / done
+    same = [r for r in past if r["prompt_version"] == prompt.version]
+    if same or past:
+        ref = same or past
+        done = sum(r["succeeded"] for r in ref)
+        per_in = sum(r["input_tokens"] for r in ref) / done
+        per_out = sum(r["output_tokens"] for r in ref) / done
+        if not same:
+            # A new prompt version: past tokens per ticket plus the change in
+            # system prompt length.
+            ref_chars = sum(
+                len(load_prompt(r["prompt_version"]).system) * r["succeeded"]
+                for r in ref
+            )
+            per_in += (len(prompt.system) - ref_chars / done) / CHARS_PER_TOKEN
     else:
-        # Rough first-run guess: about 3 characters per token on the newer tokenizer.
         chars = sum(len(t) for t in texts.values()) / len(texts)
-        per_in = (len(prompt.system) + chars) / 3
+        per_in = (
+            FIRST_RUN_OVERHEAD_TOKENS + (len(prompt.system) + chars) / CHARS_PER_TOKEN
+        )
         per_out = FALLBACK_OUTPUT_TOKENS
     n = len(texts)
     return cost_usd(prompt.model, round(per_in * n), round(per_out * n), batch)
